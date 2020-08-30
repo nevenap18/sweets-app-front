@@ -4,6 +4,8 @@
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
+    "noImplicitAny": false,
+    "allowJs": true,
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -31,7 +33,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx", "shims-vue.d.ts", "src/main.ts", "src/store/modules/sweet.js", "src/store/index.js"
   ],
   "exclude": [
     "node_modules"
