@@ -46,6 +46,7 @@ export default {
   cursor: pointer;
   outline: none !important;
   border: none;
+  min-width: 70px;
 
   &:focus {
     outline: none;

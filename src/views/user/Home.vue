@@ -1,11 +1,12 @@
 <template>
   <div v-if="isDataReady" class="home">
     <FilterNav/>
-    <div class="sweet-holder">
+    <div v-if="getAllSweets.length > 0" class="sweet-holder">
       <div class='sweet' v-for="(sweet, index) in getAllSweets" :key="index">
         <SweetCard @open-buy-modal="showBuyModal($event)" :sweet="sweet"/>
       </div>
     </div>
+    <div v-else><span>No sweets available</span></div>
     <BuyModal v-if="buyModalOpen" :sweet='sweet' @cancel-buy="buyModalOpen = false"/>
   </div>
 </template>

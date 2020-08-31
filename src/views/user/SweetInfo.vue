@@ -2,7 +2,7 @@
   <div v-if="isDataReady" class="sweet-info">
     <div class="info-wrapper">
       <div class="image">
-        <img alt="sweet-image" src="https://www.beautycolorcode.com/ffd1dc-400x400.png"/>
+        <img alt="sweet-image" :src="getImgPath"/>
       </div>
       <div class="info">
         <div class="top-info">
@@ -57,7 +57,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([])
+    ...mapGetters([]),
+    getImgPath() {
+      if(this.sweet.photos.length){
+        return `http://localhost:3000/assets/photos/${this.sweet.photos[0].imagePath}`
+      } else {
+        return 'https://www.beautycolorcode.com/ffd1dc-400x400.png'
+      }
+    }
   },
   methods: {
   ...mapActions([])

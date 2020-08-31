@@ -1,21 +1,23 @@
 <template>
   <div class='filter-nav'>
-    <div class="mainfilters-button">
-      <Button styleType="Outlined" label="Filters" @click.native="showFilters = !showFilters"/>
-      <div v-if="showFilters" class="dropdown">
-        <div class='filter' v-for="(filter, index) in mainFilters" :key="index" @click="getFilters(filter)">
-          <span>{{ filter }}</span>
+    <div class='filter-buttons'>
+      <div class="mainfilters-button">
+        <Button styleType="Outlined" :label="currentFilter ? currentFilter : 'Filters'" @click.native="showFilters = !showFilters"/>
+        <div v-if="showFilters" class="dropdown">
+          <div class='filter' v-for="(filter, index) in mainFilters" :key="index" @click="getFilters(filter)">
+            <span>{{ filter }}</span>
+          </div>
+        </div>
+      </div>
+      <div v-if="showSubfiltersButton" class="subfilters-button">
+        <Button styleType="Outlined" :label="currentSubfilter ? currentSubfilter : 'Subfilters'" @click.native="showSubfilters = !showSubfilters"/>
+        <div v-if="showSubfilters" class="dropdown">
+            <div class='filter' v-for="(filter, index) in filters" :key="index" @click="getFilteredSweets(filter)">
+            <span>{{ filter.name }}</span>
+            </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div v-if="showSubfiltersButton" class="subfilters-button">
-    <Button styleType="Outlined" label="Subfilters" @click.native="showSubfilters = !showSubfilters"/>
-    <div v-if="showSubfilters" class="dropdown">
-        <div class='filter' v-for="(filter, index) in filters" :key="index" @click="getFilteredSweets(filter)">
-        <span>{{ filter.name }}</span>
-        </div>
-    </div>
-  </div>
   </div>
 </template>
 
@@ -36,7 +38,8 @@ export default {
       showFilters: false,
       showSubfiltersButton: false,
       showSubfilters: false,
-      currentFilter: ''
+      currentFilter: '',
+      currentSubfilter: ''
     }
   },
   computed: {
@@ -46,6 +49,7 @@ export default {
     async getFilters (filter) {
       const response = await Api().get(`/${filter}`)
       this.currentFilter = filter
+      this.currentSubfilter = ''
       this.filters = response.data
       this.showSubfiltersButton = true
       this.showFilters = false
@@ -53,6 +57,7 @@ export default {
     async getFilteredSweets (filter) {
       const response = await Api().get(`/${this.currentFilter}/${Object.values(filter)[0]}`)
       this.setSweets(response.data.sweets)
+      this.currentSubfilter = filter.name
       this.showSubfilters = false
     }
   }
@@ -63,14 +68,22 @@ export default {
 
 .filter-nav {
   height: 70px;
-   width: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+   .filter-buttons {
+    width: 200px;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+   }
 }
 
 .mainfilters-button {
-  margin-right: 25px;
+  // margin-right: 25px;
   position: relative;
 }
 

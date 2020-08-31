@@ -50,6 +50,23 @@ export default {
         quantity: this.quantityUnit,
         price: this.sweet.price
       }
+
+      let array = JSON.parse(localStorage.getItem('cart'));
+
+      if (array == undefined) {
+          array = [];
+      }
+      const arrayItem = array.find(item => item.sweetId === cartItem.sweetId);
+      if (arrayItem) {
+        arrayItem.quantity += cartItem.quantity
+      } else {
+      array.push(cartItem)
+      }
+      const key = 'cart'
+      const storageItem = JSON.stringify(array)
+      localStorage.setItem(key, storageItem)
+      //filtritaj ako vec postoji sweetId da samo poveca quantity
+      this.$emit('cancel-buy')
       // dodaj u localstorage
       // 1.proveri da li postoji car u localst
       // 2.ako postoji uzmi array i pushuj u njega

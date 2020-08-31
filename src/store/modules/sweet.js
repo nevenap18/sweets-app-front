@@ -17,7 +17,7 @@ const mutations = {
 
 const actions = {
   getSweets: async ({commit}) => {
-    const payload = await Api().get('/sweet')
+    const payload = await Api().get('/sweet/?join=photos')
     commit('SET_SWEETS', payload)
     },
   setSweets: ({commit}, payload) => {

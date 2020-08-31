@@ -1,6 +1,6 @@
 <template>
   <div class="sweet-card">
-    <img alt="sweet-image" src="https://www.beautycolorcode.com/ffd1dc-400x400.png" class="sweet-image" @click="goToSweetInfo(sweet)">
+    <img alt="sweet-image" :src="getImgPath" class="sweet-image" @click="goToSweetInfo(sweet)">
     <span class='title' @click="goToSweetInfo(sweet)"> {{ sweet.name }} </span>
     <div class='buttons'>
       <Button styleType='Filled' :label='"Buy"' :type='"button"' @click.native="$emit('open-buy-modal', sweet)"/>
@@ -26,6 +26,15 @@ export default {
   methods: {
     goToSweetInfo (sweet) {
       this.$router.push({name: 'SweetInfo', params: {id: sweet.sweetId}})
+    }
+  },
+  computed: {
+    getImgPath() {
+      if(this.sweet.photos.length){
+        return `http://localhost:3000/assets/photos/${this.sweet.photos[0].imagePath}`
+      } else {
+        return 'https://www.beautycolorcode.com/ffd1dc-400x400.png'
+      }
     }
   }
 }
