@@ -2,6 +2,7 @@
   <div class="sweet-card">
     <img alt="sweet-image" :src="getImgPath" class="sweet-image" @click="goToSweetInfo(sweet)">
     <span class='title' @click="goToSweetInfo(sweet)"> {{ sweet.name }} </span>
+    <span class='title'>Price: {{ sweet.price }}rsd per <span v-if="sweet.unit === 'gr'">100</span>{{ sweet.unit }} </span>
     <div class='buttons'>
       <Button styleType='Filled' :label='"Buy"' :type='"button"' @click.native="$emit('open-buy-modal', sweet)"/>
       <Button styleType='Outlined' :label='"More Info"' :type='"button"' @click.native="goToSweetInfo(sweet)"/>

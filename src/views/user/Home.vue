@@ -1,12 +1,12 @@
 <template>
   <div v-if="isDataReady" class="home">
-    <FilterNav/>
+    <FilterNav v-if="getAllSweets.length > 0"/>
     <div v-if="getAllSweets.length > 0" class="sweet-holder">
       <div class='sweet' v-for="(sweet, index) in getAllSweets" :key="index">
         <SweetCard @open-buy-modal="showBuyModal($event)" :sweet="sweet"/>
       </div>
     </div>
-    <div v-else><span>No sweets available</span></div>
+    <div class="message" v-else><span>Sorry, no sweets currently</span></div>
     <BuyModal v-if="buyModalOpen" :sweet='sweet' @cancel-buy="buyModalOpen = false"/>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     }
   },
   async created () {
-    const response = await Api().get('/sweet')
+    const response = await Api().get('/api/sweet')
     this.setSweets(response.data)
     this.isDataReady = true
   }
@@ -61,6 +61,13 @@ export default {
 }
 .sweet {
   flex-basis: 33.33%;
+}
+
+.message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .sweet-holder {

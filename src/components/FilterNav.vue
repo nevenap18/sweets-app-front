@@ -47,7 +47,7 @@ export default {
   methods: {
     ...mapActions(['setSweets']),
     async getFilters (filter) {
-      const response = await Api().get(`/${filter}`)
+      const response = await Api().get(`/api/${filter}`)
       this.currentFilter = filter
       this.currentSubfilter = ''
       this.filters = response.data
@@ -55,7 +55,7 @@ export default {
       this.showFilters = false
     },
     async getFilteredSweets (filter) {
-      const response = await Api().get(`/${this.currentFilter}/${Object.values(filter)[0]}`)
+      const response = await Api().get(`/api/${this.currentFilter}/${Object.values(filter)[0]}`)
       this.setSweets(response.data.sweets)
       this.currentSubfilter = filter.name
       this.showSubfilters = false

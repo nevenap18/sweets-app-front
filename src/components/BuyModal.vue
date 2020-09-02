@@ -3,7 +3,7 @@
     <span> Please enter quantity: </span>
     <div>
       <input v-model.number="quantity" placeholder="Enter quantity"/>
-      <span> {{ sweet.unit }}</span>
+      <span>{{ sweet.unit }}</span>
     </div>
     <div class="buttons">
       <Button label="Buy" styleType="Filled" @click.native="addToCart"/>
@@ -46,9 +46,9 @@ export default {
         return
       }
       const cartItem = {
-        sweetId: this.sweet.sweetId,
+        sweet: this.sweet,
         quantity: this.quantityUnit,
-        price: this.sweet.price
+        price: (this.sweet.price * this.quantityUnit)
       }
 
       let array = JSON.parse(localStorage.getItem('cart'));
@@ -56,22 +56,17 @@ export default {
       if (array == undefined) {
           array = [];
       }
-      const arrayItem = array.find(item => item.sweetId === cartItem.sweetId);
+      const arrayItem = array.find(item => item.sweet.sweetId === cartItem.sweet.sweetId);
       if (arrayItem) {
         arrayItem.quantity += cartItem.quantity
+        arrayItem.price = arrayItem.price + cartItem.price
       } else {
-      array.push(cartItem)
+        array.push(cartItem)
       }
       const key = 'cart'
       const storageItem = JSON.stringify(array)
       localStorage.setItem(key, storageItem)
-      //filtritaj ako vec postoji sweetId da samo poveca quantity
       this.$emit('cancel-buy')
-      // dodaj u localstorage
-      // 1.proveri da li postoji car u localst
-      // 2.ako postoji uzmi array i pushuj u njega
-      // 3.ako ne postoji napravi ga i pushuj u njega
-      // 4.sacuvaj u ls
     }
   }
 }

@@ -7,7 +7,7 @@
       <div class="info">
         <div class="top-info">
           <span>{{sweet.name}}</span>
-          <span>{{sweet.price}}rsd per {{sweet.unit}}</span>
+          <span>{{sweet.price}}rsd per <span v-if="sweet.unit === 'gr'">100</span>{{sweet.unit}}</span>
         </div>
         <div class="description">
           <span>{{sweet.description}}</span>
@@ -70,7 +70,7 @@ export default {
   ...mapActions([])
   },
   async created () {
-    const response = await Api().get(`/sweet/${this.$route.params.id}`)
+    const response = await Api().get(`/api/sweet/${this.$route.params.id}`)
     this.sweet = response.data
     this.isDataReady = true
   }

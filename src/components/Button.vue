@@ -3,7 +3,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 
 export default {
   name: 'Button',
@@ -21,9 +20,6 @@ export default {
     label: {
       type: String
     }
-  },
-  components: {
-    
   },
   computed: {
     buttonClass () {

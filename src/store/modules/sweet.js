@@ -1,4 +1,3 @@
-import axios from 'axios'
 import Api from '@/helpers/Api'
 
 const state = {
@@ -17,7 +16,7 @@ const mutations = {
 
 const actions = {
   getSweets: async ({commit}) => {
-    const payload = await Api().get('/sweet/?join=photos')
+    const payload = await Api().get('/api/sweet')
     commit('SET_SWEETS', payload)
     },
   setSweets: ({commit}, payload) => {
