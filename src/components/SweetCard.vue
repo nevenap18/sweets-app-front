@@ -22,6 +22,8 @@ export default {
     sweet: {
       type: Object,
       required: true
+    },
+    photos: {
     }
   },
   methods: {
@@ -31,8 +33,9 @@ export default {
   },
   computed: {
     getImgPath() {
-      if(this.sweet.photos.length){
-        return `http://localhost:3000/assets/photos/${this.sweet.photos[0].imagePath}`
+      const picture = this.photos.find(element => element.sweetId === this.sweet.sweetId)
+      if(picture){
+        return `http://localhost:3000/assets/photos/resized/${picture.imagePath}`
       } else {
         return 'https://www.beautycolorcode.com/ffd1dc-400x400.png'
       }

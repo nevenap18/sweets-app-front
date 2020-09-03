@@ -5,9 +5,9 @@
         <CartItem :sweet="item.sweet" :quantity="item.quantity" :price="item.price"/>
       </div>
     </div>
-    <div class="message" v-else><span>{{ message }}</span></div>
+    <div class="message" v-if="showMessage"><span>{{ message }}</span></div>
     <div class="button-order">
-      <Button :label="'Order'" styleType="Filled" @click.native="sendCartData"/>
+      <Button v-if="showButton" :label="'Order'" styleType="Filled" @click.native="sendCartData"/>
     </div>
   </div>
 </template>
@@ -26,8 +26,10 @@ export default {
   data () {
     return {
       cart: [],
-      message: '',
-      cartData: []
+      message: 'Cart is empty',
+      cartData: [],
+      showButton: true,
+      showMessage: false
     }
   },
   methods: {
@@ -36,20 +38,27 @@ export default {
         sweets: this.cartData
       }
       Api().post('/api/cart/createCart', payload)
+
+      localStorage.removeItem('cart')
+      this.cart = []
+      this.showButton = false
+      this.showMessage = true
     }
   },
   created () {
     this.cart = JSON.parse(localStorage.getItem('cart'))
-    this.cartData = this.cart.map(item => {
-      const obj = {}
-      obj.sweetId = item.sweet.sweetId
-      obj.quantity = item.quantity
-      obj.price = item.price
-      return obj
-    });
 
     if (this.cart == undefined) {
-      this.message = 'Cart is empty'
+      this.showButton = false
+      this.showMessage = true
+    } else {
+      this.cartData = this.cart.map(item => {
+        const obj = {}
+        obj.sweetId = item.sweet.sweetId
+        obj.quantity = item.quantity
+        obj.price = item.price
+        return obj
+      })
     }
   }
 }

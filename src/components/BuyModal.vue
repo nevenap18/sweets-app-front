@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      quantity: 0
+      quantity: this.sweet.unit === 'pcs' ? 1 : 100
     }
   },
   computed: {

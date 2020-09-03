@@ -46,7 +46,7 @@ export default {
   computed: {
     getImgPath() {
       if(this.sweet.photos.length){
-        return `http://localhost:3000/assets/photos/${this.sweet.photos[0].imagePath}`
+        return `http://localhost:3000/assets/photos/resized/${this.sweet.photos[0].imagePath}`
       } else {
         return 'https://www.beautycolorcode.com/ffd1dc-400x400.png'
       }

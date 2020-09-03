@@ -74,7 +74,7 @@ export default {
   align-items: center;
 
    .filter-buttons {
-    width: 200px;
+    width: 250px;
     height: 100%;
     display: flex;
     justify-content: space-around;

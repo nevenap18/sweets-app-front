@@ -3,7 +3,7 @@
     <FilterNav v-if="getAllSweets.length > 0"/>
     <div v-if="getAllSweets.length > 0" class="sweet-holder">
       <div class='sweet' v-for="(sweet, index) in getAllSweets" :key="index">
-        <SweetCard @open-buy-modal="showBuyModal($event)" :sweet="sweet"/>
+        <SweetCard :photos="photos" @open-buy-modal="showBuyModal($event)" :sweet="sweet"/>
       </div>
     </div>
     <div class="message" v-else><span>Sorry, no sweets currently</span></div>
@@ -29,22 +29,25 @@ export default {
     return {
       isDataReady: false,
       buyModalOpen: false,
-      sweet: {}
+      sweet: {},
+      photos: []
     }
   },
   computed: {
     ...mapGetters(['getAllSweets'])
   },
   methods: {
-  ...mapActions(['setSweets']),
+  ...mapActions(['setSweets', 'setPhotos']),
   showBuyModal (sweet) {
     this.sweet = sweet
     this.buyModalOpen = true
     }
   },
   async created () {
-    const response = await Api().get('/api/sweet')
-    this.setSweets(response.data)
+    const sweets = await Api().get('/api/sweet')
+    const photos = await Api().get('/api/photo')
+    this.photos = photos.data
+    this.setSweets(sweets.data)
     this.isDataReady = true
   }
 }
